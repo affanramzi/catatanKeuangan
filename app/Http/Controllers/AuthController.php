@@ -24,7 +24,6 @@ class AuthController extends Controller
         return new UserResource($user);
     }
     public function login(ValidateUserLogin $request){
-
         $credentials = request(['email', 'password']);
         if (!$token = auth()->user) {
             return  response()->json([
@@ -33,7 +32,6 @@ class AuthController extends Controller
                 ]
             ], 401);
         }
-
         return response()->json([
             'type' =>'success',
             'message' => 'Logged in.',

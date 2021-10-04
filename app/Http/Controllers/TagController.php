@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\transaksi;
 use Illuminate\Http\Request;
+use App\Models\tag;
 
-class TransaksiController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,9 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $transaksi = transaksi::orderBy('created_at', 'DESC')->get();
+        $tag = tag::orderBy('created_at', 'DESC')->get();
 
-    return view('index', compact('transaksis'));
+    return view('index', compact('tags'));
     }
 
     /**
@@ -30,15 +30,6 @@ class TransaksiController extends Controller
         return view('create');
     }
 
-    public function proses(Request $request)
-    {
-        $this->validate($request,[
-            'nominal' => 'required|numeric|digits_between:1,50',
-            'keterangan' => 'required|string|min:1|max:100'
-        ]);
-
-        return view('proses',['data' => $request]);
-    }
     /**
      * Store a newly created resource in storage.
      *
@@ -48,15 +39,13 @@ class TransaksiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nominal' => 'required|numeric|digits_between:1,50',
-            'keterangan' => 'required|string|min:1|max:100'
+            'nama' => 'required|string|min:1|max:10'
         ]);
 
-        $transaksi = new transaksi();
-        $transaksi->nominal = $request->nominal;
-        $transaksi->keterangan = $request->keterangan;
+        $tag = new tag();
+        $tag->nama = $request->nama;
 
-        if($transaksi->save()) {
+        if($tag->save()) {
             return redirect()->route('form.index')->with('message', 'Berhasil ditambahkan');
         } else {
             return redirect()->back()->with('message', 'Gagal');
@@ -82,9 +71,9 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = transaksi::find($id);
+        $tag = tag::find($id);
 
-    return view('edit', compact('transaksi'));
+    return view('edit', compact('tags'));
     }
 
     /**
@@ -97,15 +86,13 @@ class TransaksiController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nominal' => 'required|numeric|digits_between:1,50',
-            'keterangan' => 'required|string|min:1|max:100'
+            'nama' => 'required|string|min:1|max:10'
         ]);
 
-        $transaksi = new transaksi();
-        $transaksi->nominal = $request->nominal;
-        $transaksi->keterangan = $request->keterangan;
+        $tag = new tag();
+        $tag->nama = $request->nama;
 
-        if($transaksi->save()) {
+        if($tag->save()) {
             return redirect()->route('form.index')->with('message', 'Berhasil ditambahkan');
         } else {
             return redirect()->back()->with('message', 'Gagal');
@@ -120,9 +107,9 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        $transaksi = transaksi::find($id);
+        $tag = tag::find($id);
 
-    if($transaksi->delete()) {
+    if($tag->delete()) {
         return redirect()->route('form.index')->with('message', 'Berhasil dihapus');
     } else {
         return redirect()->route('form.index')->with('message', 'Tidak bisa dihapus');

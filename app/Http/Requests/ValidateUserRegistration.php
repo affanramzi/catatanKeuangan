@@ -10,8 +10,9 @@ class ValidateUserRegistration extends FormRequest
     public function rules()
     {
         return [
-            "email" => "required",
-            "password" => "required"
+            "name" => "required",
+            "email" => "required|unique:users",
+            "password" => "required|min:8"
         ];
     }
 }
