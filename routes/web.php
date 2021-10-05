@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\SubkategoriController;
 use App\Http\Controllers\KategoriController;
@@ -30,3 +32,4 @@ Route::resource('subkategori', SubkategoriController::class);
 Route::resource('transaksi', TransaksiController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::get('/customer/logout', 'CustomerLoginController@logout')->name('customer.logout');
+

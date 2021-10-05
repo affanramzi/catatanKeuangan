@@ -8,6 +8,7 @@ use App\Http\Resources\User as UserResource;
 use App\Http\Requests\ValidateUserRegistration;
 use App\Http\Requests\ValidateUserLogin;
 use App\Models\user as ModelsUser;
+use Illuminate\Support\Facades\Auth;
 use App\Models\user;
 class AuthController extends Controller
 {
@@ -37,6 +38,10 @@ class AuthController extends Controller
             'message' => 'Logged in.',
             'token' => $token
         ]);
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
     }
 
     public function user()
